@@ -112,11 +112,116 @@ Given the statistical power of the test as **0.80**, hence **β=0.20** and **α=
 
 ### Experiment Exposure and Duration
 
-Considering there are no other experiments perform simaltaneously during this time, when 100% of the traffic divereted into this experiment in which 50% of the users then will be in the treatment group:
+Considering there are no other experiments perform simaltaneously during this time, when 100% of the traffic divereted into this experiment in which 50% of the users would be in the treatment group:
 - The days required  to conduct the experiment with net conversion, retention and gross conversion is :118.0
 - The days required to conduct the experiment with net conversion and gross conversion is :17.0
 
-The number of daily cookies given in the baseline dataset is 40000. ue to seasonality and risk of using 100% of traffic in the experiment, the duration of the gross conversion and net conversion can be further extended by 17 more days by diverting only 50% of traffic in this expxeriment.
+The number of daily cookies given in the baseline dataset is 40000. Due to seasonality and risk of using 100% of traffic in the experiment, the duration of the gross conversion and net conversion can be further extended by 17 more days by diverting only 50% of traffic in this expxeriment.
+- The days required for the experiment with 50% traffic diverted for gross conversion and net conversion, is :  34  days
+
+
+### Multiple Hypothesis
+
+As multiple hypothesis were initially made for this project, if it was decided to perform the A/B test with multiple hypothesis, then statistical parameters such as p value should be compared against **Family Wise Error Rate(FWER)**.
+
+- **FWER** : The probability of making at least one Type I error (false positive rate)
+- **Boneferroni correction method**: The correction to the significance level(α) to control the FWER
+
+If performing multiple hypothesis tests, it require more pageview count which is 118 days. Doing this could be risky due to several reasons. It can cause high opportunity cost due to long duration of the experiment. As well as if the treatment harms the user experience, it can lead to degradation of conversion rates and have the trend unnoticed for a long time leading a huge business risk. Considering all above conerns,we will remove retention as an evalutaion metric and use only gross conversion rate and net conversion as only evaluation metrics. Especially since net conversion is a product of rentention and gross conversion, so that we might be able to draw inferences about the retention rate from the other two.
+
+Using only gross conversion and net conversion simplify the A/B test to use only Hypothesis III.
+
+## Data Analysis
+
+**Sanity checks for internal and external test validity**
+
+To ensure the experiment will run properly, sanity checks for internal test validity should be performed on the invariant metrics. As invariant metrics should stay constant throughout the duration of the experiment, there should be no significant difference between these metrics in the control and experiment group. The invariant metrics selected for this project are:
+
+- Number of clicks
+- Number of cookies
+- click through probability
+
+*Cookies*
+
+The number of unique cookies of the experiment is the count of pageviews which is the sample size of each group.The experiment group has a larger smaple size than the control group, causing a imbalanced data distribution between two groups. It is important to determine if the effect of this imbalance distribution has a small effect or larger effect. The presence of the **Sample Ratio Mismatch (SRM)** of the two groups can be determined by usig a **Chi_square goodness of fit test** or by calculating **Sample Size Ratio**.
+
+Method I :
+
+ 
+
+- If Ratio >0.8 , then sample sizes are balanced and test should perform well.
+- If 0.5 < Ratio ≤ 0.8, then sample sizes are moderately imbalanced.
+- If Ratio ≤ 0.5, then sample sizes are highly imbalanced.
+Method II
+
+ 
+
+- if p_value < significance level, then a SRM maybe present in the experiment
+- if p_value >= significance level, then a SRM may not presert
+
+The calculated sample size ratio using *Method I* of **1.0025**  and is larger than 0.8. When chi -square goodness fit was performed as in *Method II*, it resulted p_value of **0.2878** which is less than alpha value of 0.05. So from both methods it was determined there is no presence of sample ratio mismatch. So the sample distribution between control and experiment groups is considred as a balanced distribution and should be good to perform the A/B test.
+
+*Clicks*
+
+In order to check if the count of clicks was evenly distributed among both groups and to validate the randomization several statistical tests can be performed.If considerd, being assigned to the control group as a success, the binominal distribution can be used to model the number of successes in the given sample (treatment+control) a **binomial test** with calculating the **confidence intervals(CI)** can be performed as a sanity check.
+
+Method I :
+
+
+where:
+
+ = sample proportion
+= critical value of the confidence interval
+ = standard error of the proportion
+
+If proportion of number of successs in the sample is within the interval,then there is no significance difference between the data distribution between control and experiment groups.
+
+Method II :
+
+Alternatively, **one-proportion z-test** can be performed as a sanity check to determine if any of the control or experiment group has got lesser or higher than the 50% of the data which is the count of clicks:
+
+ 
+ 
+
+where:
+
+ = sample proportion (number of successes divided by the total sample size),
+ = hypothesized population proportion,
+ = sample size.
+
+If P value >= significance level, then SRM may not present in the experiment.
+
+From *Method I* , the calculated p_value is **0.5004673474066628** and it lies within the confidence interval of **(0.4964, 0.5046)**. When **one-proportion z test** was performed as in *Method II*, the calculated p_value is **0.8238676283042462** and its higher than alpha =0.05. So, that both tests proved, there is no significant difference between the data distribution between groups, and SRM may not present.
+
+*Click Through Rate (CTR)*
+
+Since the normal approximation can be assumed due to large sample size, **two proportions z test** can be used to determine if the population of the each groups are significantly different.Alternatively **confidence intervals** can be used as another satistical test for validity of the sanity check, by assuming a binomial distribution in the underline data distribution of each group.
+
+ 
+ 
+ 
+
+Where:
+
+ = Observed proportion in group 1
+= Observed proportion in group 2
+ 
+ = Pooled proportion
+, 
+ = Sample sizes of each groups
+
+By using **two_proportion z test** method, the calculated p_value is **0.9317359524473912** and its greater than alpha. So, that CTR proportion is not significantly different and groups are balanced.
+
+Now,since the experiment passed sanity checks for internal test validity for all invarinat metrics,its ready to proceed with the A/B test to analyze the evaluation metrics.
+
+## Test Analysis
+
+
+
+
+
+
+
 
 
 

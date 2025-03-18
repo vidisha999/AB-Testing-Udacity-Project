@@ -12,11 +12,70 @@ A/B testing is a statistical method which is use to help businesses make data-dr
 ## Data 
 Dat for this project is provided by Udacity. It has provided ![baseline data](baseline_values.csv)  meassured at the start of the experiment as the reference point for comparison. The data collected for ![control group](control.csv) and ![experiment group](Experiment.csv) are provided in seperate datasets in order to conduct the A/B test.
 
-Each column in teh dataset is defined by Udacity as:
-Pageviews: Number of unique cookies to view the course overview page that day.
-Clicks: Number of unique cookies to click the course overview page that day.
-Enrollments: Number of user-ids to enroll in the free trial that day.
-Payments: Number of user-ids who who enrolled on that day to remain enrolled for 14 days and thus make a payment. (Note that the date for this column is the start date, that is, the date of enrollment, rather than the date of the payment. The payment happened 14 days later. Because of this, the enrollments and payments are tracked for 14 fewer days than the other columns.)
+Each column in the dataset is defined by Udacity as:
+
+- `Pageviews`: Number of unique cookies to view the course overview page that day.
+- `Clicks`: Number of unique cookies to click the course overview page that day.
+- `Enrollments`: Number of user-ids to enroll in the free trial that day.
+- `Payments`: Number of user-ids who who enrolled on that day to remain enrolled for 14 days and thus make a payment. (Note that the date for this column is the start date, that is, the date of enrollment, rather than the date of the payment. The payment happened 14 days later. Because of this, the enrollments and payments are tracked for 14 fewer days than the other columns.)
+## Experiment Setup 
+### Unit of Diversion 
+The unit of diversion is a unique cookie as provided by the Udacity. This cookie tracks the unique users who enroll on the free-trial option on each day by assigning them a user-id. For the users who don't enroll, were not given a user-id to track them even though they were signed in when they have to visit the course overview page.
+
+### Initial Hypothesis
+Based on the project challenge, following initial hypothesis were initially derrived. But these were later changed after data analysis and selection of metrics to perform the test.
+
+- H0: The treatment has no effect in the number of students who enroll in the free-trial.
+- H1: The treatment reduces the number of sudents who enroll in the free-trail.
+----
+- H0: The treatment has no effect in the number of students who leave at the end or during the free-trial.
+- H1: The treatment reduces the number of students who leave during or after the end of free-trial.
+----
+- H0: The treatment has no effect in the number of students who retain after the end of free-trial period.
+- H1: The treatment increases the probability students who stay after the end of free-trail.
+----
+- H0: The treatment has no effect in the number of students who use free-course material .
+- H1: The treatment increases the probability students who start using free- course material.
+### Metric Choice 
+Udacity has provided a list of metrics which can be used as either an evaluation metric or an invariant metric ,with their practical significance level. Both types of metrics are important in conducting an A/B test.
+
+**Invarinat Metric** :
+
+Metrics that don't chnage during the whole duration of the experiment and can be considered as control variables. They are important metrics which are use for internal and external sanity checks before performing complex evaluation of the AB test or deploy the test in the production environment.
+
+- *Number of cookies* : Number of unique daily cookies to browse course overview page (**dmin=3000**)
+- *Number of clicks* : Number of unique daily cookies to click the free-trial button (**dmin=240**)
+- *Click through probability*: (Number of clicks/ Number of cookies) (**dmin=0.01**)
+
+**Evaluation Metric**: 
+
+Metrics which can be meassurable easily and should be sensitive enough to pickup intended chnages and robust to unimportant changes. Once users enrolled in the free-trial plan , they are tracked through unique user-id. Hence the number of user-ids are only meassured after the treatment is introduced,it is not evenly distributed across control and experiment groups, causing a non-normal distribution and so that it's not considered as an evaluation metric.
+
+- *Gross Coversion* : (The number of user-ids to complete checkout and enroll in free-trial plan / Number of unique cookies to click on the free-trial button)(**dmin =0.01**)
+- *Retention* : (The number of user-ids to remain enrolled past free-trial plan/ Number of user-ids completed checkout and enrolled in free-trail) (**dmin=0.01**)
+- *Net Conversion* : The number of user-ids to remain enrolled past free-trial plan/ Number of unique cookies to click free-trial button(Gross conversion * Retention)(**dmin=0.0075**)
+
+When deciding the evalutaion metrics, there are few parameters which use to identify if the selected metrics can cause a meaningful difference in the experiment.
+
+- **Statistical Power (1-β)** : The probability of detecting the value of a pre-determined size or higher that value, if the treatment has caused a difference in the meassured metrics.
+    - **β** here is the **False Negative probability** or **Type II error** in a statistical test.
+    - **False Negative** : Fail to reject the null hypothesis and mistakenly conclude there is no difference in the meassured metrics caused by the treatment, when it really does.
+
+- **Significance Level(α)** : False positive probability or Type I error in a statistical test.
+     - **False Positive** : Mistakenly rejects the null hypothesis and concludes there is a difference in the meassured metrics caused by the treatment, when there is no real effect.
+     - **Minimum Detectable Effect**- The minimum size of the metric that is considered significant to the business in order to change the default actions.Refer as the practical siginificance level
+
+### Meassuring variability of Metrics
+Baseline data is used to  perform severla pre-processes and pre-analysis needed to perform before implementation of the A/B tests. The  variability of each evaluation metrics is determined by calculating the standard error, based on the sample sizing suggested by Udacity. Then the experimental sample size was calculated to find the total count of pageviews require to test each of the hypothesis defined at the begining of the test. With the results gained for the count of pageviews, the experiment duration and exposure was determined. 
+
+In order to perform most of the above processes, statistical tests were used. As many statistical tests were based on severla assumptions.
+
+
+
+
+
+
+
 
 ## Results Analysis
 Based on the results gained from the statistical tests for the gross conversion and net conversion metrics, the effect made by the gross conversion was negative, which means the observed gross conversion in treatment group is around 2% smaller than that of the control group. Since the minimum detectable effect (dmin) for gross conversion falls outside the entire confidence interval  and it is smaller than the lower limit of the interval, the observed difference in the gross conversion is considered both statisticaly and practically significant. So, that launching the new features may make a business impact, considering the gross conversion metric.

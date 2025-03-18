@@ -218,7 +218,25 @@ Now,since the experiment passed sanity checks for internal test validity for all
 
 Payments were tracked 14 fewer days than the other metrics in the dataset, given their start date.Looking at the loaded data, the payments are tracked for 37 days, which is 23 days to get enrolled and 14 days afterwards to make a payment. To be fully accountable for the 14 days free trial period only 23 days is considered as the duration of the experiment. So that first 23 entries of the each datasets is enough to compute statistical meassures. This could alter the targeted sample size of the experiment. Calculated True sample size of **423525** should be used for statitical computations in the evaluation metrics.
 
-*Hypotheis Revised*
+**Hypotheis Revised**
+**Graphical Evaluation of the evaluation metrics**
+
+Based on the both plots ![variability of Net conversion between control and experiment]() and ![variability of gross conversion between control and experiment](), on Oct 24 th , there was a huge peak in the conversion rates in both groups, and needs further investigation about this days to check if there were any special offers or discounts for the users browsing the website.
+
+**Practical and Statistical Significance**
+
+
+
+
+
+
+
+
+|Metric|Observed Difference|dmin|p_value|confidence interval| statitical significane| practical significance|
+|:--|:--|:--|:--|:--|:--|:--|
+|gross conversion|-0.020554874580361565|-0.01|2.57843e-06|(-0.0291233583354044,-0.01198639082531873)|yes|yes|
+|net conversion|
+
 
 
 

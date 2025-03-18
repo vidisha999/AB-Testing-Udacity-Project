@@ -68,11 +68,55 @@ When deciding the evalutaion metrics, there are few parameters which use to iden
 ### Meassuring variability of Metrics
 Baseline data is used to  perform severla pre-processes and pre-analysis needed to perform before implementation of the A/B tests. The  variability of each evaluation metrics is determined by calculating the standard error, based on the sample sizing suggested by Udacity. Then the experimental sample size was calculated to find the total count of pageviews require to test each of the hypothesis defined at the begining of the test. With the results gained for the count of pageviews, the experiment duration and exposure was determined. 
 
-In order to perform most of the above processes, statistical tests were used. As many statistical tests were based on severla assumptions.
+In order to perform above processes, parametric statistical tests were used and they were based on assumptions made to the dataset. 
 
+***Assumptions***
 
+- The fundamental assumption that is made when performing parametric tests is assuming a normal distribution in sample distribution of the chosen metric, in order to allow compute p-values and significance levels.
+- To perform analytical estimate of the standard error of each evaluation metric, the sample distribution of them should be known; binomial or normal and a large enough sample size allowing central limit theorem(CLT).
+- This get rids of the need of doing empirical estimation which require bootstrapping samples which is computationaly expensive.
 
+***For the A/B test***:
 
+- The unit of diversion is same as the unit of analysis (denominator) in all evaluation metrics. So, that outcomes can be model as bernouli trials for each entity making the sample proportion follow a binomial dristribution.
+- According to Central Limit Theorem(CLT), the binomial distribution of the sample proportion approaches a normal distribution when the sample size is large enough, and the assumption of normal distribution can be made even though the underline distribution is binomial.
+- Since 5000 cookies, 400 clicks and 83 user_ids are large enough sample size, its assumed that the sample proportion distribution of each evaluation metric approaches a normal distribution. It can be further verified using the formula ```np≥10 and n(1−p)≥10```
+  
+All three analytical metrics passed the valuduty test for the assumptions, so it can proceed with resizing the data sample based on the sizing of 5000 cookies provided by Udacity and then calculate the estimated standard error for each of the metrics using the formula ```sqrt(p(1-p)/n)```.Below tables show the calculated sample sizes of invariant metrics and derrived statndard error of evaluation metrics. 
+
+**Sample size of Invariant Metrics**
+
+|Metric|Sample size|
+|:----|:----|
+|cookies|5000|
+|clicks|400|
+|user id|82.5|
+
+**Estimated Standard Error of Evaluation Metrics**
+
+|Metric|Standard Error|
+|:---|:---|
+|gross conversion|0.020231|
+|retention|0.054949|
+|net conversion|0.015602|
+
+***Experimnetal Sample Size***
+
+Given the statistical power of the test as **0.80**, hence **β=0.20** and **α=0.05** , the experimental sample size needed to meassure each evaluation metric is calculated, using **two-proportions z-test** under the normal approximation of binomial distributions. The below table shows the values derrived for the experimental sample sizes of the evaluation metrics.
+
+|Metric| Experimental Sample size|
+|:---|:---|
+|gross conversion|51115.224893|
+|retention|78173.219325|
+|net conversion|54826.675793	|
+
+### Experiment Exposure and Duration
+
+Considering there are no other experiments perform simaltaneously during this time, when 100% of the traffic divereted into this experiment in which 50% of the users then will be in the treatment group:
+- The days required  to conduct the experiment with net conversion, retention and gross conversion is :118.0
+- The days required to conduct the experiment with net conversion and gross conversion is :17.0
+
+The number of daily cookies given in the baseline dataset is 40000. ue to seasonality and risk of using 100% of traffic in the experiment, the duration of the gross conversion and net conversion can be further extended by 17 more days by diverting only 50% of traffic in this expxeriment.
 
 
 

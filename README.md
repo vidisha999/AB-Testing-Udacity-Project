@@ -216,8 +216,9 @@ Now,since the experiment passed sanity checks for internal test validity for all
 
 ## Test Analysis
 
+Payments were tracked 14 fewer days than the other metrics in the dataset, given their start date.Looking at the loaded data, the payments are tracked for 37 days, which is 23 days to get enrolled and 14 days afterwards to make a payment. To be fully accountable for the 14 days free trial period only 23 days is considered as the duration of the experiment. So that first 23 entries of the each datasets is enough to compute statistical meassures. This could alter the targeted sample size of the experiment. Calculated True sample size of **423525** should be used for statitical computations in the evaluation metrics.
 
-
+*Hypotheis Revised*
 
 
 

@@ -9,6 +9,15 @@ The goal of conducting the A/B test with new experimental change is to reduce th
 ## Background 
 A/B testing is a statistical method which is use to help businesses make data-driven decisions regarding the impact of a new change on the business. A/B test composed of two variants in the experiment, which are control setup with default conditions and the experiment setup with the new chnage introduced. The test is performed to identify if there is a change in the measured value of the selected metric in both setups. The selected metric could be metrics such as KPI, signup rates, click through rates which  use to evaluate the business impact of the new change. A/B test stands at a gold standard in the hierarchy of evidence pyramid, which results gaining highest possible accuracy on a statistical test due to higher causation and less correlation or assumption basis.
 
+## Data 
+Dat for this project is provided by Udacity. It has provided ![baseline data](baseline_values.csv)  meassured at the start of the experiment as the reference point for comparison. The data collected for ![control group](control.csv) and ![experiment group](Experiment.csv) are provided in seperate datasets in order to conduct the A/B test.
+
+Each column in teh dataset is defined by Udacity as:
+Pageviews: Number of unique cookies to view the course overview page that day.
+Clicks: Number of unique cookies to click the course overview page that day.
+Enrollments: Number of user-ids to enroll in the free trial that day.
+Payments: Number of user-ids who who enrolled on that day to remain enrolled for 14 days and thus make a payment. (Note that the date for this column is the start date, that is, the date of enrollment, rather than the date of the payment. The payment happened 14 days later. Because of this, the enrollments and payments are tracked for 14 fewer days than the other columns.)
+
 ## Results Analysis
 Based on the results gained from the statistical tests for the gross conversion and net conversion metrics, the effect made by the gross conversion was negative, which means the observed gross conversion in treatment group is around 2% smaller than that of the control group. Since the minimum detectable effect (dmin) for gross conversion falls outside the entire confidence interval  and it is smaller than the lower limit of the interval, the observed difference in the gross conversion is considered both statisticaly and practically significant. So, that launching the new features may make a business impact, considering the gross conversion metric.
 

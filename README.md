@@ -228,7 +228,7 @@ H₁: NC_experiment ≠ NC_control
 
 **Graphical Evaluation of the evaluation metrics**
 
-Based on the both plots ![variability of Net conversion between control and experiment]() and ![variability of gross conversion between control and experiment](), on Oct 24 th , there was a huge peak in the both conversion rates among both groups, and it needs further investigation about this day to check if there were any special offers or discounts for the users browsing the website.
+Based on the both plots ![variability of Net conversion between control and experiment](Images/gc_plot.png) and ![variability of gross conversion between control and experiment](Images/nc_plot.png), on Oct 24 th , there was a huge peak in the both conversion rates among both groups, and it needs further investigation about this day to check if there were any special offers or discounts for the users browsing the website.
 
 **Practical and Statistical Significance**
 

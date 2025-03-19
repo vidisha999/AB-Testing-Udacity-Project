@@ -113,11 +113,11 @@ Given the statistical power of the test as **0.80**, hence **β=0.20** and **α=
 ### Experiment Exposure and Duration
 
 Considering there are no other experiments perform simaltaneously during this time, when 100% of the traffic divereted into this experiment in which 50% of the users would be in the treatment group:
-- The days required  to conduct the experiment with net conversion, retention and gross conversion is :118.0
-- The days required to conduct the experiment with net conversion and gross conversion is :17.0
+- The days required  to conduct the experiment with net conversion, retention and gross conversion is :**118 days**
+- The days required to conduct the experiment with net conversion and gross conversion is :**17 days**
 
 The number of daily cookies given in the baseline dataset is 40000. Due to seasonality and risk of using 100% of traffic in the experiment, the duration of the gross conversion and net conversion can be further extended by 17 more days by diverting only 50% of traffic in this expxeriment.
-- The days required for the experiment with 50% traffic diverted for gross conversion and net conversion, is :  34  days
+- The days required for the experiment with 50% traffic diverted for gross conversion and net conversion, is :  **34  days**
 
 
 ### Multiple Hypothesis
@@ -141,109 +141,140 @@ To ensure the experiment will run properly, sanity checks for internal test vali
 - Number of cookies
 - click through probability
 
-*Cookies*
+***Cookies***
 
-The number of unique cookies of the experiment is the count of pageviews which is the sample size of each group.The experiment group has a larger smaple size than the control group, causing a imbalanced data distribution between two groups. It is important to determine if the effect of this imbalance distribution has a small effect or larger effect. The presence of the **Sample Ratio Mismatch (SRM)** of the two groups can be determined by usig a **Chi_square goodness of fit test** or by calculating **Sample Size Ratio**.
+The number of unique cookies of the experiment is the count of pageviews which is also the sample size of each group.The experiment group has a larger sample size than the control group, causing a imbalanced data distribution between two groups at a glance. It is important to determine if the effect of this imbalance distribution has a small effect or larger effect. The presence of the **Sample Ratio Mismatch (SRM)** of the two groups can be determined by usig a **Chi_square goodness of fit test** or by calculating **Sample Size Ratio**.
 
 Method I :
 
- 
+```Sample Size Ratio = max(n_A, n_B) / min(n_A, n_B)```
 
 - If Ratio >0.8 , then sample sizes are balanced and test should perform well.
 - If 0.5 < Ratio ≤ 0.8, then sample sizes are moderately imbalanced.
 - If Ratio ≤ 0.5, then sample sizes are highly imbalanced.
+
 Method II
 
- 
+ ```chi² = Σ ((Oᵢ - Eᵢ)² / Eᵢ)```
 
 - if p_value < significance level, then a SRM maybe present in the experiment
 - if p_value >= significance level, then a SRM may not presert
 
-The calculated sample size ratio using *Method I* of **1.0025**  and is larger than 0.8. When chi -square goodness fit was performed as in *Method II*, it resulted p_value of **0.2878** which is less than alpha value of 0.05. So from both methods it was determined there is no presence of sample ratio mismatch. So the sample distribution between control and experiment groups is considred as a balanced distribution and should be good to perform the A/B test.
+The sample size ratio calculated using *Method I* is **1.0025**  and is larger than 0.8. When chi-square goodness fit was performed using *Method II*, the resulted p_value was **0.289** and is less than significance level **(alpha=0.05)**. Using both methods, it can be determined there is no presence of sample ratio mismatch in the test groups. So the sample distribution between control and experiment groups is considred as a balanced distribution and should be good to perform the A/B test.
 
-*Clicks*
+***Clicks***
 
-In order to check if the count of clicks was evenly distributed among both groups and to validate the randomization several statistical tests can be performed.If considerd, being assigned to the control group as a success, the binominal distribution can be used to model the number of successes in the given sample (treatment+control) a **binomial test** with calculating the **confidence intervals(CI)** can be performed as a sanity check.
+In order to check if the count of clicks was evenly distributed among both groups and to validate the randomization, several statistical tests can be performed.If considerd, being assigned to the control group as a success, the binominal distribution can be used to model the number of successes in the given sample (treatment+control). For this, a **binomial test** along with calculating **confidence intervals(CI)** can be performed as a sanity check.
 
 Method I :
 
-
+```CI = [p̂ - Z(1 - α/2) * SE, p̂ + Z(1 - α/2) * SE]```
 where:
 
- = sample proportion
-= critical value of the confidence interval
- = standard error of the proportion
+- p̂ = sample proportion
+- Z(1 - α/2)= critical value of the confidence interval
+- SE = standard error of the proportion
 
-If proportion of number of successs in the sample is within the interval,then there is no significance difference between the data distribution between control and experiment groups.
+If proportion of number of successs in the sample is within the interval,then there is no significance difference in the data distribution between test groups.
 
 Method II :
 
-Alternatively, **one-proportion z-test** can be performed as a sanity check to determine if any of the control or experiment group has got lesser or higher than the 50% of the data which is the count of clicks:
+Alternatively, **one-proportion z-test** can be performed as a sanity check to determine if any of the control or experiment group has got lesser or higher than the 50% of the data which is the total count of clicks when distributed evenly among groups:
 
- 
- 
+```Z = (p̂ - p₀) / sqrt((p₀ * (1 - p₀)) / n)``` 
 
 where:
 
- = sample proportion (number of successes divided by the total sample size),
- = hypothesized population proportion,
- = sample size.
+- p̂= sample proportion (number of successes divided by the total sample size)
+- p₀= hypothesized population proportion,
+- n= sample size.
 
 If P value >= significance level, then SRM may not present in the experiment.
 
-From *Method I* , the calculated p_value is **0.5004673474066628** and it lies within the confidence interval of **(0.4964, 0.5046)**. When **one-proportion z test** was performed as in *Method II*, the calculated p_value is **0.8238676283042462** and its higher than alpha =0.05. So, that both tests proved, there is no significant difference between the data distribution between groups, and SRM may not present.
+By performing bionmial test using *Method I* , the calculated p_value is **0.500** and it lies within the confidence interval of **(0.496, 0.505)**. When **one-proportion z test** was performed as in *Method II*, the calculated p_value is **0.824** and its larger than alpha =0.05. As it was proved using both these methods, there is no significant difference in the data distribution between groups, and SRM may not present.
 
-*Click Through Rate (CTR)*
+***Click Through Rate (CTR)**
 
 Since the normal approximation can be assumed due to large sample size, **two proportions z test** can be used to determine if the population of the each groups are significantly different.Alternatively **confidence intervals** can be used as another satistical test for validity of the sanity check, by assuming a binomial distribution in the underline data distribution of each group.
 
- 
- 
- 
-
+ ```Z = (p̂₁ - p̂₂) / sqrt(p_pooled * (1 - p_pooled) * (1/n₁ + 1/n₂))```
+  
 Where:
 
- = Observed proportion in group 1
-= Observed proportion in group 2
- 
- = Pooled proportion
-, 
- = Sample sizes of each groups
+- p̂₁ = Observed proportion in group 1
+- p̂₂= Observed proportion in group 2
+- p_pooled= Pooled proportion
+- n₁,n₂= Sample sizes of each groups
 
-By using **two_proportion z test** method, the calculated p_value is **0.9317359524473912** and its greater than alpha. So, that CTR proportion is not significantly different and groups are balanced.
+The p_value calculated using **two_proportion z test** method is **0.932** and its greater than alpha. So, that CTR proportions are not significantly different between groups and they have a balanced distribution.
 
-Now,since the experiment passed sanity checks for internal test validity for all invarinat metrics,its ready to proceed with the A/B test to analyze the evaluation metrics.
+Now,since the experiment passed sanity checks of internal test validity for all invariant metrics,its ready to proceed with the A/B test to analyze the evaluation metrics.
 
 ## Test Analysis
 
-Payments were tracked 14 fewer days than the other metrics in the dataset, given their start date.Looking at the loaded data, the payments are tracked for 37 days, which is 23 days to get enrolled and 14 days afterwards to make a payment. To be fully accountable for the 14 days free trial period only 23 days is considered as the duration of the experiment. So that first 23 entries of the each datasets is enough to compute statistical meassures. This could alter the targeted sample size of the experiment. Calculated True sample size of **423525** should be used for statitical computations in the evaluation metrics.
+Payments were tracked 14 fewer days than the other metrics in the dataset, given their start date.Looking at the loaded data, the payments are tracked for 37 days, which is 23 days to get enrolled and 14 days afterwards to make a payment. To be fully accountable for the 14 days free trial period only a period of 23 days is considered as the duration of the experiment. So that first 23 entries of the each datasets is enough to compute statistical meassures. This could alter the targeted sample size of the experiment. The calculated true sample size of **423,525** should be used for statitical computations in the evaluation metrics.
 
 **Hypotheis Revised**
+
+Gross Conversion(GC)
+
+H₀: GC_experiment = GC_control
+H₁: GC_experiment ≠ GC_control
+
+Net Conversion (CN)
+
+H₀: NC_experiment = NC_control
+H₁: NC_experiment ≠ NC_control
+
 **Graphical Evaluation of the evaluation metrics**
 
-Based on the both plots ![variability of Net conversion between control and experiment]() and ![variability of gross conversion between control and experiment](), on Oct 24 th , there was a huge peak in the conversion rates in both groups, and needs further investigation about this days to check if there were any special offers or discounts for the users browsing the website.
+Based on the both plots ![variability of Net conversion between control and experiment]() and ![variability of gross conversion between control and experiment](), on Oct 24 th , there was a huge peak in the both conversion rates among both groups, and it needs further investigation about this day to check if there were any special offers or discounts for the users browsing the website.
 
 **Practical and Statistical Significance**
 
+*Statistical Siginificance*
 
+  - In order to check if the observed difference between the sample and experiment groups are statisticaly significant, statistical method , **two proportions z test** can be used to compute the **p_value** associated with the Z_statistic and compare it against the given siginificance level (alpha).
+  - 95 % **confidence intervals** can be computed for the difference between metrics to check if near 0 value lies within the interval, in order to determine the statistical significance of the test.
 
+*Practical Significance*
 
+- However, having the test statistically siginificant is not enough to launch the targeted features.The impact must be higher than the **minimum detectable effect (dmin)** in order to considre the effect as practical significant.
+- If the dmin is not given then **cohens'h** metric can be calculated to evaluate the size of the effect and determine if its meaningful.
+- If the dmin is given, the practical siginificance of the test can be found out by checking if the observed difference is higher or lower than the dmin and if the dmin contains or overlap with 95% confidence interval.
 
+        - if dmin is positive:
+            - Check if difference (d) is greater than dmin⁡.
+            - Ensure that the entire confidence interval lies to the right of dmin⁡.
+            - If both conditions hold → practically significant.
 
+        - if dmin is negative (decrease in meaningfulway):
+            - Check if difference (d) is smaller than dmin⁡.
+            - Ensure that the dmin⁡ is outside and to the right of confidence interval.
+            - If both conditions hold → practically significant.
 
 
 |Metric|Observed Difference|dmin|p_value|confidence interval| statitical significane| practical significance|
 |:--|:--|:--|:--|:--|:--|:--|
-|gross conversion|-0.020554874580361565|-0.01|2.57843e-06|(-0.0291233583354044,-0.01198639082531873)|yes|yes|
-|net conversion|
+|gross conversion|-0.0205|-0.01|2.578e-06|(-0.029,-0.0119)|yes|yes|
+|net conversion|-0.0049|0.0075|0.1558|(-0.0116,0.0019)|No|No|
 
+The above table shows, the observed difference made by the gross conversion metric in control and experiment groups is both statisticaly and practically significant, while neither of significance was made by the net conversion metric.
+## Seasonality Analysis 
 
+Udacity requires to complete ths result analysis by runing a sign test. Sign test is a non-paramteric test that is use to determine whether there's a consistent directional difference between the control and experiment groups without assuming the normal distribution. Performing this test would violate the fundamental assumptions made in this A/B test in regards to normality of the sample distriibution. Instead of the sign test, an analysis can be performed on the seasonality of the test by breaking down the user acitivity for the day of the week.
 
+|Day|GC_difference|NC_difference|
+|:--|:--|:--|
+|Mon|-0.020228|-0.007257|
+|Tue|-0.024932|-0.006806|
+|Wed|-0.017096|0.009921 |
+|Thu|0.017814|-0.005035  |
+|Fri|-0.025138| -0.021883 |
 
+Based on the above table, most days of the week results a negative effect on the observed difference, which means treatment group had less gross conversions compared to control group as expected .But on **Thursday** , a positive effect was observed and it is important to further analyze the website traffic divertion on Thursdays.
 
-
-
-
+For net conversion, many days results a negative effect on the observed difference, which is not expected and not allign with the main goal of introducing this feature. **Wednesday** is the only day of the week when a positive effect was observed.It is also in a small amount of **0.9 % **more users in the treatment group than control group made payments.
 
 ## Results Analysis
 Based on the results gained from the statistical tests for the gross conversion and net conversion metrics, the effect made by the gross conversion was negative, which means the observed gross conversion in treatment group is around 2% smaller than that of the control group. Since the minimum detectable effect (dmin) for gross conversion falls outside the entire confidence interval  and it is smaller than the lower limit of the interval, the observed difference in the gross conversion is considered both statisticaly and practically significant. So, that launching the new features may make a business impact, considering the gross conversion metric.

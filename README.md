@@ -10,7 +10,7 @@ The goal of conducting the A/B test with new experimental change is to reduce th
 A/B testing is a statistical method which is use to help businesses make data-driven decisions regarding the impact of a new change on the business. A/B test composed of two variants in the experiment, which are control setup with default conditions and the experiment setup with the new chnage introduced. The test is performed to identify if there is a change in the measured value of the selected metric in both setups. The selected metric could be metrics such as KPI, signup rates, click through rates which  use to evaluate the business impact of the new change. A/B test stands at a gold standard in the hierarchy of evidence pyramid, which results gaining highest possible accuracy on a statistical test due to higher causation and less correlation or assumption basis.
 
 ## Data 
-Dat for this project is provided by Udacity. It has provided ![baseline data](baseline_values.csv)  meassured at the start of the experiment as the reference point for comparison. The data collected for ![control group](control.csv) and ![experiment group](Experiment.csv) are provided in seperate datasets in order to conduct the A/B test.
+Dat for this project is provided by Udacity. It has provided ![baseline data]('baseline_values.csv')  meassured at the start of the experiment as the reference point for comparison. The data collected for ![control group]('control.csv') and ![experiment group]('Experiment.csv') are provided in seperate datasets in order to conduct the A/B test.
 
 Each column in the dataset is defined by Udacity as:
 
@@ -193,7 +193,7 @@ If P value >= significance level, then SRM may not present in the experiment.
 
 By performing bionmial test using *Method I* , the calculated p_value is **0.500** and it lies within the confidence interval of **(0.496, 0.505)**. When **one-proportion z test** was performed as in *Method II*, the calculated p_value is **0.824** and its larger than alpha =0.05. As it was proved using both these methods, there is no significant difference in the data distribution between groups, and SRM may not present.
 
-***Click Through Rate (CTR)**
+***Click Through Rate (CTR)***
 
 Since the normal approximation can be assumed due to large sample size, **two proportions z test** can be used to determine if the population of the each groups are significantly different.Alternatively **confidence intervals** can be used as another satistical test for validity of the sanity check, by assuming a binomial distribution in the underline data distribution of each group.
 
@@ -274,7 +274,7 @@ Udacity requires to complete ths result analysis by runing a sign test. Sign tes
 
 Based on the above table, most days of the week results a negative effect on the observed difference, which means treatment group had less gross conversions compared to control group as expected .But on **Thursday** , a positive effect was observed and it is important to further analyze the website traffic divertion on Thursdays.
 
-For net conversion, many days results a negative effect on the observed difference, which is not expected and not allign with the main goal of introducing this feature. **Wednesday** is the only day of the week when a positive effect was observed.It is also in a small amount of **0.9 % **more users in the treatment group than control group made payments.
+For net conversion, many days results a negative effect on the observed difference, which is not expected and not allign with the main goal of introducing this feature. **Wednesday** is the only day of the week when a positive effect was observed.It is also in a small amount of **0.9 %** more users in the treatment group than control group made payments.
 
 ## Results Analysis
 Based on the results gained from the statistical tests for the gross conversion and net conversion metrics, the effect made by the gross conversion was negative, which means the observed gross conversion in treatment group is around 2% smaller than that of the control group. Since the minimum detectable effect (dmin) for gross conversion falls outside the entire confidence interval  and it is smaller than the lower limit of the interval, the observed difference in the gross conversion is considered both statisticaly and practically significant. So, that launching the new features may make a business impact, considering the gross conversion metric.

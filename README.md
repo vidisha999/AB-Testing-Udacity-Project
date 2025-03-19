@@ -10,7 +10,7 @@ The goal of conducting the A/B test with new experimental change is to reduce th
 A/B testing is a statistical method which is use to help businesses make data-driven decisions regarding the impact of a new change on the business. A/B test composed of two variants in the experiment, which are control setup with default conditions and the experiment setup with the new chnage introduced. The test is performed to identify if there is a change in the measured value of the selected metric in both setups. The selected metric could be metrics such as KPI, signup rates, click through rates which  use to evaluate the business impact of the new change. A/B test stands at a gold standard in the hierarchy of evidence pyramid, which results gaining highest possible accuracy on a statistical test due to higher causation and less correlation or assumption basis.
 
 ## Data 
-Dat for this project is provided by Udacity. It has provided ![baseline data]('baseline_values.csv')  meassured at the start of the experiment as the reference point for comparison. The data collected for ![control group]('control.csv') and ![experiment group]('Experiment.csv') are provided in seperate datasets in order to conduct the A/B test.
+Dat for this project is provided by Udacity. It has provided [baseline data](baseline_values.csv)  meassured at the start of the experiment as the reference point for comparison. The data collected for [control group](control.csv) and [experiment group](Experiment.csv) are provided in seperate datasets in order to conduct the A/B test.
 
 Each column in the dataset is defined by Udacity as:
 

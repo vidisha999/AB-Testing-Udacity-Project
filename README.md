@@ -169,6 +169,7 @@ In order to check if the count of clicks was evenly distributed among both group
 Method I :
 
 ```CI = [p̂ - Z(1 - α/2) * SE, p̂ + Z(1 - α/2) * SE]```
+
 where:
 
 - p̂ = sample proportion
@@ -218,17 +219,17 @@ Payments were tracked 14 fewer days than the other metrics in the dataset, given
 
 Gross Conversion(GC)
 
-H₀: GC_experiment = GC_control
-H₁: GC_experiment ≠ GC_control
+- H₀: GC_experiment = GC_control
+- H₁: GC_experiment ≠ GC_control
 
 Net Conversion (CN)
 
-H₀: NC_experiment = NC_control
-H₁: NC_experiment ≠ NC_control
+- H₀: NC_experiment = NC_control
+- H₁: NC_experiment ≠ NC_control
 
 **Graphical Evaluation of the evaluation metrics**
 
-Based on the both plots ![variability of Net conversion between control and experiment](Images/gc_plot.png) and ![variability of gross conversion between control and experiment](Images/nc_plot.png), on Oct 24 th , there was a huge peak in the both conversion rates among both groups, and it needs further investigation about this day to check if there were any special offers or discounts for the users browsing the website.
+![variability of Net conversion between control and experiment](Images/gc_plot.png) ![variability of gross conversion between control and experiment](Images/nc_plot.png) Based on the both plots,on Oct 24 th , there was a huge peak in the both conversion rates among both groups, and it needs further investigation about this day to check if there were any special offers or discounts for the users browsing the website.
 
 **Practical and Statistical Significance**
 
@@ -298,6 +299,10 @@ Based on the result analysis, this test would help make clearer expectations amo
 2. Improve the current features
 
 For the users who alreday enrolled in the free-trial plan, their user experience can be further improved by providing one on one tutoring support and assigning students into groups. So, that they can share each others their thoughts and knowledge on solving difficult problems or work on course projects as a group. It would also improve the colloarative mindset of students which would pre-train them on working in an industrial environment.
+
+## Reference 
+- https://www.kaggle.com/code/mariusmesserschmied/udacity-a-b-testing-final-course-project/notebook
+- https://github.com/zyellieyan/AB-Testing-Project/blob/master/ABTestingProject.ipynb
 
 
 
